@@ -73,3 +73,19 @@ h1{
 #btn-reset:hover{
   background-color: rgb(29, 155, 24);
 }
+
+
+
+/*sweetalert*/
+.swal2-container {
+  z-index: 10 !important; 
+}
+
+
+.river{
+  background-color: rgb(255, 0, 0);
+}
+
+.boca{
+  background-color: blue;
+}
