@@ -1,33 +1,49 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-
+import Square from './components/Square'
+import PlayerTurn from './components/PlayerTurn'
+import BtnReset from './components/ResetGame'
+let turnos = 0;
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [board, setBoard] = useState(Array(9).fill('sinEquipo'))
+  const updateBoard = (index) =>{
+    if (board[index] !== "sinEquipo") {
+      return;
+    }
+    const newBoard = [...board];
+    newBoard[index] = turnos % 2 === 0 ? "river" : "boca";
+    setBoard(newBoard)
+    turnos += 1
+  }
+  const resetBoard = () => {
+    setBoard(Array(9).fill('sinEquipo'));
+  };
+
+
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <h1>TicTacToe</h1>
+        <BtnReset funcionBtn={resetBoard}/>
+        <div className="wrap-squares">
+          {board.map((_, index) => {
+            return(
+              <Square 
+                key={index}
+                index={index}
+                team={board[index]}
+                click={updateBoard}/>
+            )
+          })}
+        </div>
+        <div className="wrap-PlayerTurn">
+          <PlayerTurn team="river"/>
+          <PlayerTurn team="boca"/>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
